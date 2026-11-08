@@ -1,8 +1,8 @@
-# Runtimes and Tooling - GenieX on the IQ-9075
+# Runtimes and Tooling on the IQ-9075
 
-The reference generator uses **GenieX CLI v0.10.0** with a cached LFM GGUF. The optional d1-2B gate uses **Transformers on the CPU (Path A)** and does not call the GenieX server.
+The reference generator uses **GenieX CLI v0.10.0** with a cached LFM GGUF. The optional reference d1-2B gate uses **Transformers on the CPU (Path A)** and does not call the GenieX server. [ZETIC's IQ9 SDK](../examples/zetic-iq9/README.md) is a separate, currently unverified route for locally staged LFM3 and d1 packages.
 
-Use `geniex version` and `geniex --help` to inspect the installed runtime. Do not reinstall or change versions unnecessarily, especially between rehearsal and the demo.
+If using GenieX, use `geniex version` and `geniex --help` to inspect the installed runtime. Do not reinstall or change versions unnecessarily, especially between rehearsal and the demo.
 
 ## Runtimes
 
@@ -11,6 +11,9 @@ Use `geniex version` and `geniex --help` to inspect the installed runtime. Do no
 | `llama_cpp` through GenieX | GGUF and associated model assets | NPU, GPU, CPU, hybrid, depending on model support | Reference LFM generator |
 | `qairt` | Qualcomm AI Hub bundles | NPU | Alternative deployment format; conversion is outside this guide |
 | Transformers | Local safetensors snapshot and model code | CPU for d1 Path A | Optional decision gate |
+| ZETIC IQ9 SDK | ZETIC v73 model packages and bundled C++ library | Hexagon v73 per upstream IQ9 guide; verify on the board | Optional LFM3-Omni/d1 route; not board-verified here |
+
+The [ZETIC guide](../examples/zetic-iq9/README.md) covers its artifact staging and smoke check. Its C++ API is not the GenieX OpenAI-compatible HTTP endpoint. Do not apply GenieX model IDs, request fields, or performance results to ZETIC. Keep the two runtimes' packages and version records separate.
 
 ## Model format and precision
 

@@ -31,6 +31,8 @@ Then tie it to the architecture: what the local rule, optional d1 gate, or other
 
 ## 2. Numbers (measure them; never quote the docs as your own)
 
+The following collector is for GenieX's local HTTP server. For ZETIC, use its IQ9 CLI or SDK timings plus the app's own end-to-end JSONL, and measure process and device memory on the board. Do not pass ZETIC results off as GenieX collector output.
+
 ```bash
 # Separate terminal, from the repo root:
 skills/iq9-geniex-lfm/scripts/serve.sh run
@@ -49,11 +51,11 @@ Do not reuse legacy or [dated reference results](../../README.md#developer-notes
 
 For the Fastest Agent or Best Tiny Agent awards, add:
 - **End-to-end loop time** from the app log: `loop_ms` median and p95, not just model speed.
-- **Footprint:** model size on disk (`geniex list`), server RSS, and peak RSS of the app (`/usr/bin/time -v`, "Maximum resident set size"). Measure the chosen d1/model/configuration rather than transferring legacy memory figures. Instantaneous server RSS, peak app RSS, and NPU/device memory are distinct. d1 is optional for tiny-agent designs.
+- **Footprint:** model size on disk (GenieX cache or ZETIC package), runtime process RSS, and peak RSS of the app (`/usr/bin/time -v`, "Maximum resident set size"). Measure the chosen d1/model/configuration rather than transferring legacy memory figures. Instantaneous process RSS, peak app RSS, and NPU/device memory are distinct. d1 is optional for tiny-agent designs.
 - **Endurance:** run for 30 minutes or more, and report the iteration count, errors, and the temperature trend.
 - **Bench, optional:** `geniex-bench` (see `docs/developer-guide.md` §10). Use the v0.10.0 bench to match the runtime, and set `LD_LIBRARY_PATH` as shown there.
 
-Write numbers into the app's README with the board, date, GenieX version, actual model/build and precision, workload, n, and medians. Label estimates as estimates and stored results as prior results. Mark anything not measured as ⚠️. Any new helper behavior must pass local checks and a bounded IQ9 integration check before being called board-verified.
+Write numbers into the app's README with the board, date, chosen runtime and version, actual model/build and precision, workload, n, and medians. Label estimates as estimates and stored results as prior results. Mark anything not measured as ⚠️. Any new helper behavior must pass local checks and a bounded IQ9 integration check before being called board-verified.
 
 ## 3. Two-minute demo
 
@@ -71,6 +73,6 @@ Keep a visible timer, a recorded backup video, and a recorded log ready.
 
 - [ ] Preflight shows no FAIL for the app's selected profile/model (`reference`, `generator`, or `board`); the app also passes its end-to-end smoke test.
 - [ ] The `iq9-offline-rehearsal` network-off run is done, and its evidence is saved.
-- [ ] Run a visible foreground server with a keepalive covering quiet gaps (`serve.sh run` defaults to 1800 s); verify a usable capped warm-up and HTP0 before showing metrics.
-- [ ] Use unique initial raw prompts and validate answer/tool content. Know how to safely relaunch the owned foreground server; do not interrupt a shared one or silently detach it.
+- [ ] For GenieX, run a visible foreground server with a keepalive covering quiet gaps (`serve.sh run` defaults to 1800 s); verify a usable capped warm-up and HTP0 before showing metrics. For ZETIC, verify its device route and a capped warm-up using the app's local package.
+- [ ] Validate answer/tool content. For GenieX raw completions, use unique initial prompts. Know how to safely relaunch the chosen runtime; do not interrupt a shared process.
 - [ ] Read the licence for every model shown. LFM3-1.7B and d1-2B use the LFM Open License v1.0.

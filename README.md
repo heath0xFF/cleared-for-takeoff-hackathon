@@ -12,6 +12,7 @@ Reference documentation for the hackathon: build on-device AI agents with **Liqu
 * **Generator and tools:** Choose **any model in LiquidAI's LFM3 family** that fits your project.
 * **Reference generator:** This repo's examples use `LiquidAI/LFM3-1.7B-GGUF` (Q4_0) via GenieX v0.10.0—a starting point, not a required model.
 * **Optional decision layer:** `LiquidAI/d1-2B`, a decision model that answers typed questions in one pass with no output tokens.
+* **Optional ZETIC route:** ZETIC publishes an IQ9 Hexagon v73 SDK and LFM3-Omni/d1 examples. See the [ZETIC IQ9 guide](examples/zetic-iq9/README.md) for local staging and a bounded smoke check. This route is not yet verified on this repo's board.
 
 Other LFM models are also options. Browse [LiquidAI's published models on Hugging Face](https://huggingface.co/LiquidAI) and each model's card and file list rather than treating this repo's examples as a model catalog. The example READMEs explain their reference choices.
 
@@ -56,12 +57,13 @@ Judging weights and the "why not just a cloud API call?" question are in [`docs/
 | `examples/lfm-server-npu/`      | LFM3-1.7B: start `geniex serve` on the NPU, send one capped chat request, stop it                                                                                              |
 | `examples/always-on-agent/`     | The always-on loop, runnable: observe, decide (d1), act through an allowlist, explain alerts (LFM, raw completion), log to JSONL                                               |
 | `examples/tool-calling/`        | LFM3-1.7B: native `tools` calls, schema validation, allowlist, and a policy check before any write action                                                                      |
+| `examples/zetic-iq9/`           | Optional ZETIC IQ9 SDK route: setup, local artifact check, and capped text/d1 smoke calls; board and offline validation still needed                                            |
 | `starter/`                      | `run.sh`: checks the board, runs one decision pass and one generation, and points to the next example                                                                          |
 | `skills/`                       | Agent skills with tested scripts: preflight, GenieX/LFM client, d1 calibration, agent scaffold, tool calling, offline audit, demo metrics. Start with [`AGENTS.md`](AGENTS.md) |
 | `AGENTS.md`                     | Instructions for coding agents: rules, skills, where to run, what to ask before doing                                                                                          |
 | `apps/`                         | Where hackathon projects go (`skills/iq9-always-on-agent/scripts/scaffold.sh apps/<name>`)                                                                                     |
 
-**Start from working examples:** This repo includes a model inference sample, a local agent, a guarded tool-calling example, and a starter check. After completing setup, run `./starter/run.sh` to check your board and models before building your project.
+**Start from working examples:** This repo includes a model inference sample, a local agent, a guarded tool-calling example, and a starter check. After completing the reference setup, run `./starter/run.sh` to check that stack. If you choose ZETIC, use its [separate IQ9 route](examples/zetic-iq9/README.md); a reference-stack result does not validate ZETIC.
 
 ## Developer Notes
 

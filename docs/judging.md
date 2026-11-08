@@ -2,6 +2,8 @@
 
 Use this rubric to plan the project and its demo. If the organizers' brief differs, follow the brief.
 
+Runtime, SDK, programming language, and model-package choice do not earn points by themselves. Apply the same offline and evidence requirements to every route; score the resulting app against the criteria below.
+
 ## Scoring
 
 | Weight | Criterion | What judges look for |

@@ -8,7 +8,7 @@ Before downloading or importing assets:
 
 ```bash
 df -h /
-geniex list
+geniex list  # if using GenieX
 ```
 
 Inspect existing local model directories as well as the cache. A missing cache entry does not mean the weights are absent. Reuse local weights with an approved import where possible.
@@ -25,9 +25,9 @@ Ask before deleting files or running `geniex remove` or `geniex clean` on a shar
 
 ### Software
 
-- [ ] The chosen runtime is installed; the reference GenieX version is v0.10.0.
+- [ ] The chosen runtime is staged; the reference GenieX version is v0.10.0. For ZETIC, keep its built IQ9 binaries and matching SDK libraries locally.
 - [ ] NPU driver packages and device permissions are set up for the generator.
-- [ ] The app's Python environment and other dependencies are installed.
+- [ ] The app's language environment and other dependencies are installed or staged.
 - [ ] Runtime installers, matching archives, and any recovery wheels are available locally if needed.
 - [ ] UI JavaScript, CSS, fonts, and other assets are served locally rather than from a CDN.
 - [ ] No installation or model download happens when the app starts.
@@ -36,9 +36,9 @@ For an offline Python reinstall, stage wheels for the app's requirements and try
 
 ### Models
 
-- [ ] Every generator model used by the app is registered in the local cache.
+- [ ] Every generator model used by the app is available locally: registered in the GenieX cache or present as a complete ZETIC package for the chosen route.
 - [ ] Its matching tokenizer, prompt template, projector, and any other required modality assets are present.
-- [ ] If using d1, the full pinned snapshot is at `~/models/d1-2B`; its `REVISION` matches `10e7671d44e4`.
+- [ ] If using the reference Transformers d1 route, the full pinned snapshot is at `~/models/d1-2B`; its `REVISION` matches `10e7671d44e4`. If using ZETIC, stage its complete matching d1 package instead.
 - [ ] Model code has been reviewed before `trust_remote_code=True` is used.
 - [ ] Model licenses have been read.
 
@@ -55,8 +55,8 @@ Back up board files being replaced when copying updates. Avoid destructive sync 
 
 ## Code rules
 
-- **Local model loads:** Transformers loads a snapshot directory with `local_files_only=True`; GenieX requests use already-registered cached IDs.
-- **Offline settings:** set `HF_HUB_OFFLINE=1`, `TRANSFORMERS_OFFLINE=1`, and `HF_HUB_DISABLE_TELEMETRY=1` before local Transformers imports.
+- **Local model loads:** Transformers loads a snapshot directory with `local_files_only=True`; GenieX requests use already-registered cached IDs; ZETIC apps use staged packages through `fromPath()`.
+- **Offline settings:** if using Transformers, set `HF_HUB_OFFLINE=1`, `TRANSFORMERS_OFFLINE=1`, and `HF_HUB_DISABLE_TELEMETRY=1` before imports.
 - **No external runtime dependencies:** no downloads, package installs, telemetry, cloud services, or remote UI assets in the core workflow. Loopback calls to the local inference server are allowed.
 - **Bounded calls:** cap LFM requests, validate output, and log errors without crashing the monitor loop.
 
@@ -73,8 +73,8 @@ Review each finding and the dependencies it cannot inspect. A static scan is not
 Get explicit approval before a network cut or reboot. Use the board's local console: disconnecting networking over SSH can also disconnect your control session.
 
 1. Disconnect Ethernet, disable Wi-Fi, and check for other uplinks, including USB networking. An external `curl` failure alone does not establish that all links are down.
-2. Start the generator from a stopped state in a separate terminal, then launch the app using its normal command. A reboot is optional, not required.
-3. Send a capped request and inspect the current server's device/offload log for `HTP0`. Investigate missing device output rather than assuming CPU fallback.
+2. Start the chosen runtime from a stopped state, then launch the app using its normal command. A reboot is optional, not required.
+3. Send a capped request and inspect current board evidence for the chosen runtime's NPU route. For GenieX, inspect the server's device/offload log for `HTP0`. For ZETIC, confirm its actual device route rather than inferring offload from the model name or CLI timing.
 4. Run the core workflow for at least 10 minutes, including an event that triggers an explanation or allowlisted action. Exercise local UI assets and input handling too.
 5. Inspect the app's flushed JSONL for decisions, executed actions, usable explanations, and errors. Check responsiveness and memory for the intended workload.
 6. Restore networking from the local console when the rehearsal is complete.
@@ -85,7 +85,7 @@ Do not use a generic one-interface network-cut script. A scripted cut needs an a
 
 - Keep local sample data, a recorded demo, and a copy of the decision log.
 - Know the normal launch command and where errors are logged.
-- Know how to stop and relaunch the owned foreground server without interrupting another team's work.
+- Know how to stop and relaunch the chosen runtime without interrupting another team's work.
 - An already-cached alternative model can be an optional fallback; do not download a second stack just for this checklist.
 
 ## Common failures

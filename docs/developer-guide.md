@@ -5,6 +5,7 @@ Reference documentation for developers at the On-Device AI Hackathon: Cleared fo
 - **Hardware:** Dragonwing IQ-9075 EVK, Ubuntu 24.04 aarch64.
 - **Generator and tools:** choose an LFM3-family model that fits the project. The examples default to LFM3-1.7B GGUF through GenieX v0.10.0 on the NPU.
 - **Optional decision layer:** d1-2B through Transformers on the CPU, or a rule/another decision design.
+- **Alternative runtime:** ZETIC's IQ9 SDK supplies local LFM3-Omni and d1 examples; see the [optional ZETIC route](../examples/zetic-iq9/README.md). Its board behavior has not been verified in this repository.
 - **Inputs:** external sensors are optional and not supplied. Use brought sensors, internal readings, local files/events, or simulated inputs.
 - **Deployment:** the final demo runs without the network.
 
@@ -30,6 +31,7 @@ Reference documentation for developers at the On-Device AI Hackathon: Cleared fo
 - [IQ-9075 EVK setup](https://dragonwingdocs.qualcomm.com/Ubuntu/devices/iq9075-evk/set-up-the-device)
 - [LFM3-1.7B GGUF model card](https://huggingface.co/LiquidAI/LFM3-1.7B-GGUF)
 - [d1-2B model card](https://huggingface.co/LiquidAI/d1-2B)
+- [ZETIC IQ9 examples](https://github.com/zetic-ai/LFM3-zetic-apps/tree/main/iq9) (optional runtime)
 
 Run commands below on the board from the repo root unless a different directory is specified. From a laptop, use the board host supplied by the owner; do not assume the laptop has GenieX, the NPU, or the models.
 
@@ -65,6 +67,8 @@ A rule can replace d1 when the decision is simple. Keep d1 and LFM generation se
 | LFM generation and tools | GenieX `llama_cpp`, cached GGUF, NPU |
 | Optional d1 gate | Transformers `system_one()`, local snapshot, fp32 CPU |
 
+The table describes the measured reference route. ZETIC's C++ SDK is an [alternative IQ9 route](../examples/zetic-iq9/README.md) for locally staged LFM3-Omni and d1 packages. It does not use the GenieX HTTP endpoint or the reference Transformers snapshot. Verify its chosen package and device route on the board before using it in a demo.
+
 ### 2.3 Compute units
 
 | `--compute` | Route | Guidance |
@@ -90,7 +94,7 @@ Start board work with the [preflight](../skills/iq9-preflight/SKILL.md):
 bash skills/iq9-preflight/scripts/preflight.sh --json
 ```
 
-The default profile checks the full reference stack. For an app without d1, use `--profile generator --model 'cached-name:precision'`; use `--profile board` for hardware-only checks. Choose the profile for the app rather than requiring every reference model.
+The default profile checks the full reference stack. For an app without d1, use `--profile generator --model 'cached-name:precision'`; use `--profile board` for hardware-only checks, including the ZETIC route. Choose the profile for the app rather than requiring every reference model. The [ZETIC smoke check](../examples/zetic-iq9/README.md#smoke-check-from-this-repository) inspects its own staged binaries and packages.
 
 ### 3.2 Driver packages
 
