@@ -92,7 +92,7 @@ def main() -> int:
         print(f"smoke check failed: {exc}", file=sys.stderr)
         return 1
 
-    print("ZETIC IQ9 example smoke check passed. NPU offload and network-off operation still need separate verification.")
+    print("ZETIC IQ9 example smoke check passed. Run the network-off rehearsal before the demo.")
     return 0
 
 

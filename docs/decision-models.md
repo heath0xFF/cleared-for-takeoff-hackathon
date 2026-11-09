@@ -32,7 +32,7 @@ A score is the median level index, starting at zero. The response envelope conta
 
 ### Path A: transformers on the CPU
 
-The reference d1 integration uses a local Transformers snapshot in fp32 on the CPU. It does not send decision requests to the GenieX server. ZETIC publishes a separate IQ9 d1 package and C++ decision API; see the [optional ZETIC route](../examples/zetic-iq9/README.md). That route is not board-verified here, and its package does not replace this route's snapshot or calibration.
+The reference d1 integration uses a local Transformers snapshot in fp32 on the CPU. It does not send decision requests to the GenieX server. ZETIC publishes a separate IQ9 d1 package and C++ decision API; see the [optional ZETIC route](../examples/zetic-iq9/README.md). Each route has its own model package and requires task-specific calibration.
 
 - Create a Python environment with Transformers 5.19+, torch, matching torchvision, and Pillow. Reuse the board's torch installation.
 - Stage the safetensors snapshot and its Python code at `~/models/d1-2B`, pinned to revision `10e7671d44e4`.

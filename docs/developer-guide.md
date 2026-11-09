@@ -5,7 +5,7 @@ Reference documentation for developers at the On-Device AI Hackathon: Cleared fo
 - **Hardware:** Dragonwing IQ-9075 EVK, Ubuntu 24.04 aarch64.
 - **Generator and tools:** choose an LFM3-family model that fits the project. The examples default to LFM3-1.7B GGUF through GenieX v0.10.0 on the NPU.
 - **Optional decision layer:** d1-2B through Transformers on the CPU, or a rule/another decision design.
-- **Alternative runtime:** ZETIC's IQ9 SDK supplies local LFM3-Omni and d1 examples; see the [optional ZETIC route](../examples/zetic-iq9/README.md). Its board behavior has not been verified in this repository.
+- **Alternative runtime:** ZETIC's IQ9 SDK supplies local LFM3-Omni and d1 examples; see the [optional ZETIC route](../examples/zetic-iq9/README.md).
 - **Inputs:** external sensors are optional and not supplied. Use brought sensors, internal readings, local files/events, or simulated inputs.
 - **Deployment:** the final demo runs without the network.
 

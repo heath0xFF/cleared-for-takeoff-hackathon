@@ -12,7 +12,7 @@ d1-2B takes a state (text, JSON, images) and named questions. It returns calibra
 
 ## Hard rules
 
-1. **Use Path A for the reference d1-2B integration:** `AutoModel.from_pretrained(<local dir>, trust_remote_code=True, local_files_only=True, dtype=torch.float32)` on CPU. Set offline Transformers/Hub settings before imports. The tested GenieX d1-2B GGUF requests failed; do not substitute that route. ZETIC's d1 package is a different integration with unverified board behavior here.
+1. **Use Path A for the reference d1-2B integration:** `AutoModel.from_pretrained(<local dir>, trust_remote_code=True, local_files_only=True, dtype=torch.float32)` on CPU. Set offline Transformers/Hub settings before imports. The tested GenieX d1-2B GGUF requests failed; do not substitute that route. ZETIC's d1 package uses a separate integration and needs its own calibration.
 2. **Load from `~/models/d1-2B`, never from a repo ID.** A repo ID downloads, and that fails offline. The snapshot is pinned to `10e7671d44e4` (`fetch_d1.py`). Before moving the pin, review the remote code again and ask the user.
 3. **Start with fp32.** Measure fp32 and bf16 on the board before choosing; the old d1-3B numbers do not transfer.
 4. **Load once, reuse.** Never load per request.

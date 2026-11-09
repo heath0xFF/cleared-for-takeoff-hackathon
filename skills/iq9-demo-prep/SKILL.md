@@ -31,7 +31,7 @@ Then tie it to the architecture: what the local rule, optional d1 gate, or other
 
 ## 2. Numbers (measure them; never quote the docs as your own)
 
-The following collector is for GenieX's local HTTP server. For ZETIC, use its IQ9 CLI or SDK timings plus the app's own end-to-end JSONL, and measure process and device memory on the board. Do not pass ZETIC results off as GenieX collector output.
+The following collector is for GenieX's local HTTP server. For ZETIC, use its IQ9 CLI or SDK timings plus the app's own end-to-end JSONL, and measure process and device memory on the board.
 
 ```bash
 # Separate terminal, from the repo root:
